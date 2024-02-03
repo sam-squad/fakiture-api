@@ -504,7 +504,7 @@ components:
           type: integer
         bill_type:
           type: string
-          enum: [downpayment, credit, due, intermediate, regularization, closure, proforma, true]
+          enum: [downpayment, have, must, intermediate, regularization, closure, proforma, true]
         bill_date:
           type: string
           format: date
