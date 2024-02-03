@@ -1,0 +1,652 @@
+openapi: 3.0.3
+info:
+  title: Bills API
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /bills:
+    get:
+      summary: Retrieve all bills
+      tags:
+        - Bills
+      responses:
+        '200':
+          description: List of bills
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+        '404':
+          description: No bills found
+          content:
+            application/json:
+              example:
+                message: No bills found
+                code: 404
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+    post:
+      summary: Create a new bill
+      tags:
+        - Bills
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bill'
+      responses:
+        '200':
+          description: Bill created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+  /bills/{bill_number}:
+    get:
+      summary: Retrieve a bill by its number
+      tags:
+        - Bills
+      parameters:
+        - $ref: '#/components/parameters/BillNumberPathParam'
+      responses:
+        '200':
+          description: Bill details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+        '404':
+          description: No bills found
+          content:
+            application/json:
+              example:
+                message: No bills found
+                code: 404
+    put:
+      summary: Update a bill by its number
+      tags:
+        - Bills
+      parameters:
+        - $ref: '#/components/parameters/BillNumberPathParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bill'
+      responses:
+        '200':
+          description: Bill updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+  /users:
+    get:
+      summary: Retrieve all users
+      tags:
+        - Users
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: No users found
+          content:
+            application/json:
+              example:
+                message: No users found
+                code: 404
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+    post:
+      summary: Create a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+  /users/{user_number}:
+    get:
+      summary: Retrieve a user by its number
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserNumberPathParam'
+      responses:
+        '200':
+          description: Users details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: No bills found
+          content:
+            application/json:
+              example:
+                message: No bills found
+                code: 404
+    put:
+      summary: Update a user by their number
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserNumberPathParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+
+  /companies:
+    get:
+      summary: Retrieve all companies
+      tags:
+        - Companies
+      responses:
+        '200':
+          description: List of companies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '404':
+          description: No compagnies found
+          content:
+            application/json:
+              example:
+                message: No companies found
+                code: 404
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+    post:
+      summary: Create a new company
+      tags:
+        - Companies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+      responses:
+        '200':
+          description: Company created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+
+  /companies/{company_number}:
+    get:
+      summary: Retrieve a company by its number
+      tags:
+        - Companies
+      parameters:
+        - $ref: '#/components/parameters/CompanyNumberPathParam'
+      responses:
+        '200':
+          description: Company details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '404':
+          description: No companies found
+          content:
+            application/json:
+              example:
+                message: No companies found
+                code: 404
+    put:
+      summary: Update a company by its number
+      tags:
+        - Companies
+      parameters:
+        - $ref: '#/components/parameters/CompanyNumberPathParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+      responses:
+        '200':
+          description: Company updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+
+  /clients:
+    get:
+      summary: Retrieve all clients
+      tags:
+        - Clients
+      responses:
+        '200':
+          description: List of clients
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '404':
+          description: No clients found
+          content:
+            application/json:
+              example:
+                message: No clients found
+                code: 404
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+    post:
+      summary: Create a new client
+      tags:
+        - Clients
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '200':
+          description: Client created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+
+  /clients/{client_number}:
+    get:
+      summary: Retrieve a client by their number
+      tags:
+        - Clients
+      parameters:
+        - $ref: '#/components/parameters/ClientNumberPathParam'
+      responses:
+        '200':
+          description: Client details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '404':
+          description: No clients found
+          content:
+            application/json:
+              example:
+                message: No clients found
+                code: 404
+    put:
+      summary: Update a client by their number
+      tags:
+        - Clients
+      parameters:
+        - $ref: '#/components/parameters/ClientNumberPathParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '200':
+          description: Client updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '404':
+          description: No clients found
+          content:
+            application/json:
+              example:
+                message: No clients found
+                code: 404
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+  /billLines:
+    get:
+      summary: Retrieve all bill lines
+      tags:
+        - BillLines
+      responses:
+        '200':
+          description: List of bill lines
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillLine'
+        '404':
+          description: No billLines found
+          content:
+            application/json:
+              example:
+                message: No billLines found
+                code: 404
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+    post:
+      summary: Create a new bill line
+      tags:
+        - BillLines
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillLine'
+      responses:
+        '200':
+          description: Bill line created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillLine'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+
+  /billLines/{billLine_number}:
+    get:
+      summary: Retrieve a bill line by its number
+      tags:
+        - BillLines
+      parameters:
+        - $ref: '#/components/parameters/BillLineNumberPathParam'
+      responses:
+        '200':
+          description: Bill line details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillLine'
+        '404':
+          description: No billLines found
+          content:
+            application/json:
+              example:
+                message: NobillLines found
+                code: 404
+    put:
+      summary: Update a bill line by its number
+      tags:
+        - BillLines
+      parameters:
+        - $ref: '#/components/parameters/BillLineNumberPathParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillLine'
+      responses:
+        '200':
+          description: Bill line updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillLine'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                message: Internal Server Error
+                code: 500
+components:
+  schemas:
+    Bill:
+      type: object
+      properties:
+        bill_number:
+          type: integer
+        bill_type:
+          type: string
+          enum: [downpayment, credit, due, intermediate, regularization, closure, proforma, true]
+        bill_date:
+          type: string
+          format: date
+        sale_service_date_bill:
+          type: string
+          format: date
+        payment_date:
+          type: string
+          format: date
+        payment_modality_days_bill:
+          type: integer
+        payment_method:
+          type: string
+        payment_issued_by:
+          type: string
+        total_TTC_fixed:
+          type: number
+      required:
+        - bill_number
+        - bill_type
+        - bill_date
+        - sale_service_date_bill
+        - payment_date
+        - payment_modality_days_bill
+        - payment_method
+        - payment_issued_by
+        - total_TTC_fixed
+    User:
+      type: object
+      properties:
+        user_number:
+          type: integer
+        user_name:
+          type: string
+        password:
+          type: string
+      required:
+        - user_number
+        - user_name
+        - password
+    Company:
+      type: object
+      properties:
+        company_number:
+          type: integer
+        company_name:
+          type: string
+        company_address:
+          type: string
+        company_postal_code:
+          type: string
+        company_contact:
+          type: string
+      required:
+        - company_number
+        - company_name
+        - company_address
+        - company_postal_code
+        - company_contact
+    Client:
+      type: object
+      properties:
+        client_number:
+          type: integer
+        company_name:
+          type: string
+        client_address:
+          type: string
+        client_postal_code:
+          type: string
+        client_country:
+          type: string
+      required:
+        - client_number
+        - company_name
+        - client_address
+        - client_postal_code
+        - client_country
+    BillLine:
+      type: object
+      properties:
+        bill_line_number:
+          type: integer
+        product_service_designation:
+          type: string
+        quantity:
+          type: integer
+        unit:
+          type: string
+          enum: [ hour, piece ]
+        unit_price:
+          type: integer
+        percentage_VAT_line:
+          type: number
+        VAT_calculated_line:
+          type: number
+        Total_TTC_calculated_line:
+          type: number
+      required:
+        - bill_line_number
+        - product_service_designation
+        - quantity
+        - unit
+        - unit_price
+        - percentage_VAT_line
+        - VAT_calculated_line
+        - Total_TTC_calculated_line
+
+  parameters:
+    BillNumberPathParam:
+      name: bill_number
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Number of the bill
+    UserNumberPathParam:
+      name: user_number
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Number of the user
+    CompanyNumberPathParam:
+      name: company_number
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Number of the company
+    ClientNumberPathParam:
+      name: client_number
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Number of the client
+    BillLineNumberPathParam:
+      name: billLigne_number
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Number of the billLine
+  
