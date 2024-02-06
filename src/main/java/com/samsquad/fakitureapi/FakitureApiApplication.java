@@ -1,4 +1,4 @@
-package com.example.fakitureapi;
+package com.samsquad.fakitureapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
