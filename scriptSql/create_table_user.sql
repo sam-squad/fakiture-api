@@ -1,5 +1,5 @@
 CREATE TABLE "user" (
-    userNumber Serial PRIMARY KEY,
-    userName VARCHAR(255),
-    password VARCHAR(255)
+    userNumber SERIAL PRIMARY KEY,
+    userName VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
 );

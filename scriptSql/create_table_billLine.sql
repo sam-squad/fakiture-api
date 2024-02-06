@@ -1,12 +1,12 @@
 CREATE TABLE billLine (
-      billLineNumber Serial PRIMARY KEY,
-      productServiceDesignation VARCHAR(255),
-      quantity INT,
-      unit VARCHAR(20),
-      unitPrice DOUBLE PRECISION,
-      percentageVatLine VARCHAR(100),
-      VatCalculatedLine DOUBLE PRECISION,
-      totalTtcCalculatedLine DOUBLE PRECISION,
-      billNumber SERIAL,
+      billLineNumber SERIAL PRIMARY KEY,
+      productServiceDesignation VARCHAR(255) NOT NULL,
+      quantity INT NOT NULL,
+      unit VARCHAR(20) NOT NULL,
+      unitPrice DOUBLE PRECISION NOT NULL,
+      percentageVatLine VARCHAR(100) NOT NULL,
+      VatCalculatedLine DOUBLE PRECISION NOT NULL,
+      totalTtcCalculatedLine DOUBLE PRECISION NOT NULL,
+      billNumber SERIAL NOT NULL,
       FOREIGN KEY (billNumber) REFERENCES bill(billNumber)
 );
