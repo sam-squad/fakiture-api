@@ -26,7 +26,6 @@ public class ConnectDB {
         }
         return instance;
     }
-
     public Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {
