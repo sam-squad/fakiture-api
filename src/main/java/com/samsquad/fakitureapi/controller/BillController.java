@@ -33,7 +33,7 @@ public class BillController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping("/Bill")
+    @PostMapping("/bill")
     public ResponseEntity<Bill> addBill(@RequestBody Bill bill) throws SQLException {
         Bill savedBill = billServices.saveBill(bill);
         return new ResponseEntity<>(savedBill, HttpStatus.CREATED);
