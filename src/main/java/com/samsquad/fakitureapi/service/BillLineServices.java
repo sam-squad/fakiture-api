@@ -2,7 +2,6 @@ package com.samsquad.fakitureapi.service;
 
 import com.samsquad.fakitureapi.entity.BillLine;
 import com.samsquad.fakitureapi.repository.BillLineCrudOperations;
-
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -25,6 +24,8 @@ public class BillLineServices {
     public boolean updateBillLine(int billLineNumber, BillLine billLine) throws SQLException {
         return billLineCrudOperations.update(billLine);
     }
-
+    public List<BillLine> getBillLineByBillNumber(int billNumber) {
+        return billLineCrudOperations.getBillLineByBillNumber(billNumber);
+    }
 }
 

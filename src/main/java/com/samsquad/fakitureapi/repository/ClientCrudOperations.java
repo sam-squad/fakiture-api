@@ -15,7 +15,7 @@ public class ClientCrudOperations implements CrudOperations<Client> {
     @Override
     public List<Client> findAll() {
         List<Client> clientList = new ArrayList<>();
-        String sql = "SELECT * FROM client";
+        String sql = "SELECT * FROM client ORDER BY companyNameClient";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -102,4 +102,24 @@ public class ClientCrudOperations implements CrudOperations<Client> {
             return false;
         }
     }
+    public Client getClientByNumber(int clientNumber) {
+        String sql = "SELECT * FROM client WHERE clientNumber = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, clientNumber);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new Client(
+                        resultSet.getInt("clientNumber"),
+                        resultSet.getString("companyNameClient"),
+                        resultSet.getString("clientAddress"),
+                        resultSet.getString("clientPostalCode"),
+                        resultSet.getString("clientCountry")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

@@ -26,7 +26,8 @@ public class BillServices {
     public boolean updateBill(int billNumber, Bill bill) throws SQLException {
         return billCrudOperations.update(bill);
     }
-
-
+    public Bill getBillByNumber(int billNumber) {
+        return billCrudOperations.getBillByNumber(billNumber);
+    }
 }
 

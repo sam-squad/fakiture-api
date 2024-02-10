@@ -15,7 +15,7 @@ public class UserCrudOperations implements CrudOperations<User> {
     @Override
     public List<User> findAll() {
         List<User> userList = new ArrayList<>();
-        String sql = "SELECT * FROM user";
+        String sql = "SELECT * FROM user ORDER BY userName";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -91,4 +91,22 @@ public class UserCrudOperations implements CrudOperations<User> {
             return false;
         }
     }
+    public User getUserByNumber(int userNumber) {
+        String sql = "SELECT * FROM user WHERE userNumber = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userNumber);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new User(
+                        resultSet.getInt("userNumber"),
+                        resultSet.getString("userName"),
+                        resultSet.getString("password")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

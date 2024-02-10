@@ -15,7 +15,7 @@ public class BillLineCrudOperations implements CrudOperations<BillLine> {
     @Override
     public List<BillLine> findAll() {
         List<BillLine> billLineList = new ArrayList<>();
-        String sql = "SELECT * FROM bill_line";
+        String sql = "SELECT * FROM billLine ORDER BY billLineNumber";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -40,7 +40,7 @@ public class BillLineCrudOperations implements CrudOperations<BillLine> {
 
     @Override
     public List<BillLine> saveAll(List<BillLine> toSave) {
-        String insertQuery = "INSERT INTO bill_line (billLineNumber, productServiceDesignation, quantity, unit, unitPrice, percentageVatLine, VatCalculatedLine, totalTtcCalculatedLine, billNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO billLine (billLineNumber, productServiceDesignation, quantity, unit, unitPrice, percentageVatLine, VatCalculatedLine, totalTtcCalculatedLine, billNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
             for (BillLine billLine : toSave) {
                 insertStatement.setInt(1, billLine.getBillLineNumber());
@@ -69,7 +69,7 @@ public class BillLineCrudOperations implements CrudOperations<BillLine> {
 
     @Override
     public BillLine save(BillLine toSave) {
-        String insertQuery = "INSERT INTO bill_line (productServiceDesignation, quantity, unit, unitPrice, percentageVatLine, VatCalculatedLine, totalTtcCalculatedLine, billNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO billLine (productServiceDesignation, quantity, unit, unitPrice, percentageVatLine, VatCalculatedLine, totalTtcCalculatedLine, billNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
             insertStatement.setString(1, toSave.getProductServiceDesignation());
             insertStatement.setInt(2, toSave.getQuantity());
@@ -117,5 +117,30 @@ public class BillLineCrudOperations implements CrudOperations<BillLine> {
             e.printStackTrace();
             return false;
         }
+    }
+    public List<BillLine> getBillLineByBillNumber(int billNumber) {
+        List<BillLine> billLineList = new ArrayList<>();
+        String sql = "SELECT * FROM billLine WHERE billNumber = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, billNumber);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                BillLine billLine = new BillLine(
+                        resultSet.getInt("billLineNumber"),
+                        resultSet.getString("productServiceDesignation"),
+                        resultSet.getInt("quantity"),
+                        resultSet.getString("unit"),
+                        resultSet.getDouble("unitPrice"),
+                        resultSet.getString("percentageVatLine"),
+                        resultSet.getDouble("VatCalculatedLine"),
+                        resultSet.getDouble("totalTtcCalculatedLine"),
+                        resultSet.getInt("billNumber")
+                );
+                billLineList.add(billLine);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return billLineList;
     }
 }

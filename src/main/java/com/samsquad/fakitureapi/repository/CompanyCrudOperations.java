@@ -15,7 +15,7 @@ public class CompanyCrudOperations implements CrudOperations<Company> {
     @Override
     public List<Company> findAll() {
         List<Company> companyList = new ArrayList<>();
-        String sql = "SELECT * FROM company";
+        String sql = "SELECT * FROM company ORDER BY companyName";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -102,5 +102,25 @@ public class CompanyCrudOperations implements CrudOperations<Company> {
             return false;
         }
     }
+    public Company getCompanyByNumber(int companyNumber) {
+        String sql = "SELECT * FROM company WHERE companyNumber = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, companyNumber);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new Company(
+                        resultSet.getInt("companyNumber"),
+                        resultSet.getString("companyName"),
+                        resultSet.getString("companyAddresse"),
+                        resultSet.getString("companyCodePostal"),
+                        resultSet.getString("companyContact")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
 

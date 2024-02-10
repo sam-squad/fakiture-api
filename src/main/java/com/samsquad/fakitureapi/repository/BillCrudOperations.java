@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Repository
 public class BillCrudOperations implements CrudOperations<Bill> {
     private final ConnectDB db = ConnectDB.getInstance();
@@ -15,7 +16,7 @@ public class BillCrudOperations implements CrudOperations<Bill> {
     @Override
     public List<Bill> findAll() {
         List<Bill> billList = new ArrayList<>();
-        String sql = "SELECT * FROM bill";
+        String sql = "SELECT * FROM bill ORDER BY billDate";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -71,6 +72,7 @@ public class BillCrudOperations implements CrudOperations<Bill> {
         }
         return toSave;
     }
+
     @Override
     public Bill save(Bill toSave) {
         String insertQuery = "INSERT INTO bill (billType, billDate, saleServiceDateBill, paymentDate, paymentModalityDaysBill, paymentMethod, paymentIssuedBy, totalTtcFixed, userNumber, clientNumber, companyNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -128,5 +130,32 @@ public class BillCrudOperations implements CrudOperations<Bill> {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Bill getBillByNumber(int billNumber) {
+        String sql = "SELECT * FROM bill WHERE billNumber=?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, billNumber);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new Bill(
+                        resultSet.getInt("billNumber"),
+                        resultSet.getString("billType"),
+                        resultSet.getTimestamp("billDate"),
+                        resultSet.getTimestamp("saleServiceDateBill"),
+                        resultSet.getTimestamp("paymentDate"),
+                        resultSet.getString("paymentModalityDaysBill"),
+                        resultSet.getString("paymentMethod"),
+                        resultSet.getString("paymentIssuedBy"),
+                        resultSet.getDouble("totalTtcFixed"),
+                        resultSet.getInt("userNumber"),
+                        resultSet.getInt("clientNumber"),
+                        resultSet.getInt("companyNumber")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -27,5 +27,8 @@ public class UserServices {
     public boolean updateUser(int userNumber, User user) throws SQLException {
         return userCrudOperations.update(user);
     }
+    public User getUserByNumber(int userNumber) {
+        return userCrudOperations.getUserByNumber(userNumber);
+    }
 }
 

@@ -26,5 +26,8 @@ public class ClientServices {
     public boolean updateClient(int clientNumber, Client client) throws SQLException {
         return clientCrudOperations.update(client);
     }
+    public Client getClientByNumber(int clientNumber) {
+        return clientCrudOperations.getClientByNumber(clientNumber);
+    }
 }
 

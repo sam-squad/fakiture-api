@@ -1,6 +1,7 @@
 package com.samsquad.fakitureapi.controller;
 
 import com.samsquad.fakitureapi.entity.Bill;
+import com.samsquad.fakitureapi.entity.BillLine;
 import com.samsquad.fakitureapi.service.BillServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/bills")
+@RequestMapping("/api")
 public class BillController {
     private BillServices billServices;
 
@@ -18,21 +19,26 @@ public class BillController {
         this.billServices = billServices;
     }
 
-    @GetMapping("/")
+    @GetMapping("/bills")
     public List<Bill> getAllBills() throws SQLException {
+        int pageSize = 10;
         return billServices.getAllBills();
     }
-    @PostMapping("/all")
-    public ResponseEntity<List<Bill>> addAllBills(@RequestBody List<Bill> bills) throws SQLException {
-        List<Bill> savedBills = billServices.saveAllBills(bills);
-        return new ResponseEntity<>(savedBills, HttpStatus.CREATED);
+    @GetMapping("/bill/{billNumber}")
+    public ResponseEntity<Bill> getBillByNumber(@PathVariable int billNumber) throws SQLException {
+        Bill bill = billServices.getBillByNumber(billNumber);
+        if (bill != null) {
+            return new ResponseEntity<>(bill, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-    @PostMapping("/")
+    @PostMapping("/Bill")
     public ResponseEntity<Bill> addBill(@RequestBody Bill bill) throws SQLException {
         Bill savedBill = billServices.saveBill(bill);
         return new ResponseEntity<>(savedBill, HttpStatus.CREATED);
     }
-    @PutMapping("/{billNumber}")
+    @PutMapping("/bill/{billNumber}")
     public ResponseEntity<Void> updateBill(@PathVariable int billNumber, @RequestBody Bill billUpdate) throws SQLException {
         boolean updateSuccess = billServices.updateBill(billNumber, billUpdate);
         if (updateSuccess) {

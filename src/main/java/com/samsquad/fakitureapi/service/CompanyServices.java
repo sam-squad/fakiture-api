@@ -27,5 +27,8 @@ public class CompanyServices {
     public boolean updateCompany(int companyNumber, Company company) throws SQLException {
         return companyCrudOperations.update(company);
     }
+    public Company getCompanyByNumber(int companyNumber) {
+        return companyCrudOperations.getCompanyByNumber(companyNumber);
+    }
 }
 
